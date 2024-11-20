@@ -1,5 +1,8 @@
 (() => {
-  fetch('/index.json')
+  const currentLang = window.location.pathname.split('/')[1]; // Example: "es" or "en"
+
+  // Fetch the language-specific index.json file
+  fetch(`/${currentLang}/index.json`)
   .then(response => response.json())
   .then(data => {
     const fuse = new Fuse(data, {
@@ -39,8 +42,7 @@ function renderResultsCountHtml(count, input) {
 <div class="TableObject border-gray-light py-3 mt-6">
   <div class="user-repo-search-results-summary TableObject-item TableObject-item--primary v-align-top">
     <strong>${count}</strong>
-      results
-      for "<strong>${input}</strong>"
+      ${i18n.search_results_for} "<strong>${input}</strong>"
   </div>
 </div>
 `

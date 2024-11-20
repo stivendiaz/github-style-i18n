@@ -1,3 +1,34 @@
+{{- $keys := slice "seconds_ago" "minutes_ago" "hours_ago" "days_ago" "post" "posts" "no_posts" "on" "in_the_last_year" "Created" "search_results_for" -}}
+
+{{- $short_months := slice "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec" -}}
+
+{{- $months := slice "January" "February" "March" "April" "MayFull" "June" "July" "August" "September" "October" "November" "December" -}}
+
+{{- $days := slice "Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun" -}}
+
+<script>
+  var days = {
+    {{- range $days }}
+      "{{ . }}": "{{ i18n . }}",
+    {{- end }}
+  };
+  var months = [
+    {{- range $months }}
+      "{{ i18n . }}",
+    {{- end }}
+  ];
+  var shortMonths = [
+  {{- range $short_months }}
+    "{{ i18n . }}",
+  {{- end }}
+];
+  var i18n = {
+    {{- range $keys }}
+      "{{ . }}": "{{ i18n . }}",
+    {{- end }}
+  };
+</script>
+
 <script type="application/javascript" src="{{ "js/github-style.js" | absURL }}"></script>
 {{ if or .Params.math .Site.Params.math }}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"

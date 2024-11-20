@@ -1,7 +1,9 @@
 <div style="position: relative">
+  {{ if false }}
+
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="{{ .Site.BaseURL }}">
+      <a class="Header-link" href="{{ relLangURL "" }}">
         <img class="octicon" height="32" width="32" src="{{ .Site.Params.headerIcon }}">
       </a>
     </div>
@@ -26,7 +28,7 @@
               class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
-                name="q" value="" placeholder="Search" autocomplete="off">
+                name="q" value="" placeholder="{{ i18n "header_search_placeholder"}}" autocomplete="off">
             </label>
           </form>
           {{ else }}
@@ -36,7 +38,7 @@
               class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
-                name="q" value="" placeholder="Search" autocomplete="off">
+                name="q" value="" placeholder="{{ i18n "header_search_placeholder"}}" autocomplete="off">
               <input type="hidden" name="q" value="site:{{ .Site.BaseURL }}">
             </label>
           </form>
@@ -44,12 +46,18 @@
         </div>
       </div>
     </div>
-
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="{{ .Site.BaseURL }}">
+      <a class="Header-link " href="{{ relLangURL "" }}">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="{{ .Site.Params.headerIcon }}">
       </a>
     </div>
+    <div class="Header-item">
+
+    <select id="language-switcher" class="form-select" onchange="changeLanguage(event)">
+      <option value="en" {{ if eq .Lang "en" }}selected{{ end }}>English</option>
+      <option value="es" {{ if eq .Lang "es" }}selected{{ end }}>Español</option>
+    </select>
+  </div>
     <div class="Header-item" style="margin-right: 0;">
       <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
         <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
@@ -59,6 +67,112 @@
           </path>
         </svg>
       </a>
-    </div>
+    </div>    
   </header>
+  {{ else }}
+  <div>
+    <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+      <div class="Header-item Header-item--full d-flex">
+        <div class="flex-auto min-width-0 width-fit mr-3">
+          <div class="d-flex">
+            <div class="d-none d-md-block">
+              <a class="avatar mr-2 flex-shrink-0" href="{{ relLangURL "" }}">
+                <img class=" avatar-user"
+                  src="{{ with $.Site.Params.avatar }}{{ $.Site.Params.avatar }}{{ else }}{{ "images/avatar.png" | absURL }}{{ end }}"
+                  width="32" height="32"></a>
+            </div>
+            <div class="d-flex flex-column">
+              <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                <span class="author">
+                  <a href="{{ relLangURL "" }}">{{ .Site.Params.author }}</a>
+                </span>
+                <span class="path-divider">/</span>
+                <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                  <a href="{{ .Permalink }}">{{ if .IsHome }} Home {{else}} {{.Title}}{{end}}</a>
+                </strong>
+              </h1>
+              {{ if .IsHome }}{{else}}
+              <div class="note m-0">
+                {{ T "Created" 1}} <relative-time datetime="{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}"
+                  class="no-wrap">
+                  {{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</relative-time>
+  
+                {{ if .Site.Params.lastmod }}
+                <span class="file-info-divider"></span>
+                {{ T "Modified"}} <relative-time datetime="{{ .Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}"
+                  class="no-wrap">
+                  {{ .Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</relative-time>
+                {{ end }}
+              </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="Header-item Header-item--full flex-column flex-md-row flex-order-2 flex-md-order-none flex-sm-order-2  mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important">
+        <div
+          class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+          <div class="position-relative">
+            {{ if .Site.Params.enableSearch }}
+            <form target="_blank" id="search-form" action="" accept-charset="UTF-8" method="get"
+              autocomplete="off">
+              <label
+                class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+                <input type="text"
+                  class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                  name="q" value="" placeholder="{{ i18n "header_search_placeholder"}}" autocomplete="off">
+              </label>
+            </form>
+            {{ else }}
+            <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+              autocomplete="off">
+              <label
+                class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+                <input type="text"
+                  class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                  name="q" value="" placeholder="{{ i18n "header_search_placeholder"}}" autocomplete="off">
+                <input type="hidden" name="q" value="site:{{ .Site.BaseURL }}">
+              </label>
+            </form>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      <div class="Header-item flex-md-self-auto test">
+        <select id="language-switcher" class="form-select" onchange="changeLanguage(event)">
+          <option value="en" {{ if eq .Lang "en" }}selected{{ end }}>Eng</option>
+          <option value="es" {{ if eq .Lang "es" }}selected{{ end }}>Esp</option>
+        </select>
+      </div>
+      <div class="Header-item test">
+        <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+          <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+            version="1.1" width="16" height="16">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+            </path>
+          </svg>
+        </a>
+      </div>
+    </header>
+  </div>
+  {{ end }}
+
 </div>
+
+
+
+
+<script>
+  function changeLanguage(event) {
+    const selectedLang = event.target.value;
+    const currentPath = window.location.pathname;
+    
+    // Remove the current language prefix (e.g., /en/ or /es/)
+    const pathWithoutLang = currentPath.replace(/^\/(en|es)\//, '/');
+    
+    // Redirect to the selected language
+    window.location.href = `/${selectedLang}${pathWithoutLang}`;
+  }
+</script>

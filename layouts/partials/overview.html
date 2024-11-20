@@ -1,12 +1,12 @@
 {{ define "overview" }}
 {{ $pinned := where .Site.Pages "Params.pin" true }}
 {{ $section := $pinned }}
-{{ $section_title := "Pinned" }}
+{{ $section_title := i18n "overview_title_pinned" }}
 
 {{ if ne (len $pinned) 0}}
 {{ else }}
 {{ $section = where .Site.RegularPages "Section" "in" (slice "post") }}
-{{ $section_title = "Popular posts" }}
+{{ $section_title = i18n "overview_title_popular_posts" }}
 {{ end }}
 <div>
   <div class="position-relative">
@@ -105,7 +105,7 @@
               <div class="float-left text-gray">
               </div>
               <div class="contrib-legend text-gray">
-                Less
+                {{ i18n "Less" }}
                 <ul class="legend">
                   <li style="background-color: var(--color-calendar-graph-day-bg)"></li>
                   <li style="background-color: var(--color-calendar-graph-day-L1-bg)"></li>
@@ -113,7 +113,7 @@
                   <li style="background-color: var(--color-calendar-graph-day-L3-bg)"></li>
                   <li style="background-color: var(--color-calendar-graph-day-L4-bg)"></li>
                 </ul>
-                More
+                {{ i18n "More" }}
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@
         </div>
 
         <h2 class="f4 text-normal mt-4 mb-3">
-          Post activity
+          {{ i18n "overview_title_post_activity" }}
         </h2>
 
         <div id="posts-activity">

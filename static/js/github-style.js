@@ -1,5 +1,7 @@
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const monthsFull = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// Access translations
+const translations = document.getElementById('translations');
+
+
 const now = new Date();
 let contributions;
 
@@ -74,68 +76,77 @@ function monthly(year, month, posts) {
   const monthPosts = posts.filter(post =>
     post.date.getFullYear().toString() === year && post.date.getMonth() === month
   );
+
   let liHtml = '';
   for (const post of monthPosts) {
+    const postDate = `${shortMonths[post.date.getMonth()]} ${post.date.getDate()}`;
     liHtml += `<li class="ml-0 py-1 d-flex">
-    <div
-      class="col-8 css-truncate css-truncate-target lh-condensed width-fit flex-auto min-width-0">
-      <a href="${post.link}">${post.title}</a>
-    </div>
-    <time  title="This post was made on ${months[post.date.getMonth()]} ${post.date.getDate()}"
-      class="col-2 text-right f6 text-gray-light pt-1">
-      ${months[post.date.getMonth()]} ${post.date.getDate()}
-    </time>
-  </li>`;
+      <div class="col-8 css-truncate css-truncate-target lh-condensed width-fit flex-auto min-width-0">
+        <a href="${post.link}">${post.title}</a>
+      </div>
+      <time title="${i18n.on} ${postDate}"
+            class="col-2 text-right f6 text-gray-light pt-1">
+        ${postDate}
+      </time>
+    </li>`;
   }
-  return `
-  <div class="contribution-activity-listing float-left col-12 col-lg-10">
-    <div class="width-full pb-4">
-      <h3 class="h6 pr-2 py-1 border-bottom mb-3" style="height: 14px;">
-        <span class="color-bg-canvas pl-2 pr-3">${monthsFull[month]} <span
-            class="text-gray">${monthPosts.length > 0 ? monthPosts[0].date.getFullYear() : year}</span></span>
-      </h3>
 
-      <div class="TimelineItem ">
-        <div class="TimelineItem-badge ">
-          <svg class="octicon octicon-repo-push" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-            <path fill-rule="evenodd"
-              d="M1 2.5A2.5 2.5 0 013.5 0h8.75a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V1.5h-8a1 1 0 00-1 1v6.708A2.492 2.492 0 013.5 9h3.25a.75.75 0 010 1.5H3.5a1 1 0 100 2h5.75a.75.75 0 010 1.5H3.5A2.5 2.5 0 011 11.5v-9zm13.23 7.79a.75.75 0 001.06-1.06l-2.505-2.505a.75.75 0 00-1.06 0L9.22 9.229a.75.75 0 001.06 1.061l1.225-1.224v6.184a.75.75 0 001.5 0V9.066l1.224 1.224z">
-            </path>
-          </svg>
-        </div>
-        <div class="TimelineItem-body ">
-          <details class="Details-element details-reset" open>
-            <summary role="button" class="btn-link f4 muted-link no-underline lh-condensed width-full">
-              <span class="color-text-primary ws-normal text-left">
-                Created ${monthPosts.length} post${monthPosts.length > 1 ? 's' : ''}
-              </span>
-              <span class="d-inline-block float-right color-icon-secondary">
-                <span class="Details-content--open float-right">
-                  <svg class="octicon octicon-fold" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                    <path fill-rule="evenodd"
-                      d="M10.896 2H8.75V.75a.75.75 0 00-1.5 0V2H5.104a.25.25 0 00-.177.427l2.896 2.896a.25.25 0 00.354 0l2.896-2.896A.25.25 0 0010.896 2zM8.75 15.25a.75.75 0 01-1.5 0V14H5.104a.25.25 0 01-.177-.427l2.896-2.896a.25.25 0 01.354 0l2.896 2.896a.25.25 0 01-.177.427H8.75v1.25zm-6.5-6.5a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM6 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 016 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM12 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 0112 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5z">
-                    </path>
-                  </svg></span>
-                <span class="Details-content--closed float-right"><svg class="octicon octicon-unfold"
-                    viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                    <path fill-rule="evenodd"
-                      d="M8.177.677l2.896 2.896a.25.25 0 01-.177.427H8.75v1.25a.75.75 0 01-1.5 0V4H5.104a.25.25 0 01-.177-.427L7.823.677a.25.25 0 01.354 0zM7.25 10.75a.75.75 0 011.5 0V12h2.146a.25.25 0 01.177.427l-2.896 2.896a.25.25 0 01-.354 0l-2.896-2.896A.25.25 0 015.104 12H7.25v-1.25zm-5-2a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM6 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 016 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM12 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 0112 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5z">
-                    </path>
-                  </svg>
+  // Pluralize "post" or "posts" based on the count of posts
+  const postCountText = monthPosts.length === 1 ? i18n.post : i18n.posts;
+
+  return `
+    <div class="contribution-activity-listing float-left col-12 col-lg-10">
+      <div class="width-full pb-4">
+        <h3 class="h6 pr-2 py-1 border-bottom mb-3" style="height: 14px;">
+          <span class="color-bg-canvas pl-2 pr-3">${shortMonths[month]} <span
+              class="text-gray">${monthPosts.length > 0 ? monthPosts[0].date.getFullYear() : year}</span></span>
+        </h3>
+
+        <div class="TimelineItem">
+          <div class="TimelineItem-badge">
+            <svg class="octicon octicon-repo-push" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+              <path fill-rule="evenodd"
+                d="M1 2.5A2.5 2.5 0 013.5 0h8.75a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V1.5h-8a1 1 0 00-1 1v6.708A2.492 2.492 0 013.5 9h3.25a.75.75 0 010 1.5H3.5a1 1 0 100 2h5.75a.75.75 0 010 1.5H3.5A2.5 2.5 0 011 11.5v-9zm13.23 7.79a.75.75 0 001.06-1.06l-2.505-2.505a.75.75 0 00-1.06 0L9.22 9.229a.75.75 0 001.06 1.061l1.225-1.224v6.184a.75.75 0 001.5 0V9.066l1.224 1.224z">
+              </path>
+            </svg>
+          </div>
+          <div class="TimelineItem-body">
+            <details class="Details-element details-reset" open>
+              <summary role="button" class="btn-link f4 muted-link no-underline lh-condensed width-full">
+                <span class="color-text-primary ws-normal text-left">
+                  <!-- TODO: add support multilanguaje when it has different structure -->
+                  ${monthPosts.length} ${postCountText} ${i18n.Created}
                 </span>
-              </span>
-            </summary>
-            <div>
-              <ul class="list-style-none mt-1">
-                ${liHtml}
-              </ul>
-            </div>
-          </details>
+                <span class="d-inline-block float-right color-icon-secondary">
+                  <span class="Details-content--open float-right">
+                    <svg class="octicon octicon-fold" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                      <path fill-rule="evenodd"
+                        d="M10.896 2H8.75V.75a.75.75 0 00-1.5 0V2H5.104a.25.25 0 00-.177.427l2.896 2.896a.25.25 0 00.354 0l2.896-2.896A.25.25 0 0010.896 2zM8.75 15.25a.75.75 0 01-1.5 0V14H5.104a.25.25 0 01-.177-.427l2.896-2.896a.25.25 0 01.354 0l2.896 2.896a.25.25 0 01-.177.427H8.75v1.25zm-6.5-6.5a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM6 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 016 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM12 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 0112 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5z">
+                      </path>
+                    </svg>
+                  </span>
+                  <span class="Details-content--closed float-right">
+                    <svg class="octicon octicon-unfold" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                      <path fill-rule="evenodd"
+                        d="M8.177.677l2.896 2.896a.25.25 0 01-.177.427H8.75v1.25a.75.75 0 01-1.5 0V4H5.104a.25.25 0 01-.177-.427L7.823.677a.25.25 0 01.354 0zM7.25 10.75a.75.75 0 011.5 0V12h2.146a.25.25 0 01.177.427l-2.896 2.896a.25.25 0 01-.354 0l-2.896-2.896A.25.25 0 015.104 12H7.25v-1.25zm-5-2a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM6 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 016 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5zM12 8a.75.75 0 01-.75.75h-.5a.75.75 0 010-1.5h.5A.75.75 0 0112 8zm2.25.75a.75.75 0 000-1.5h-.5a.75.75 0 000 1.5h.5z">
+                      </path>
+                    </svg>
+                  </span>
+                </span>
+              </summary>
+              <div>
+                <ul class="list-style-none mt-1">
+                  ${liHtml}
+                </ul>
+              </div>
+            </details>
+          </div>
         </div>
       </div>
     </div>
   </div>`;
 }
+
 
 function yearList() {
   const years = [];
@@ -156,11 +167,11 @@ function yearList() {
 }
 
 function graph(year, posts, startDate, endDate) {
-  const postsStr = posts.length === 1 ? "post" : "posts";
+  const postsStr = posts.length === 1 ? i18n.post : i18n.posts;;
   if (year === now.getFullYear().toString()) {
-    document.querySelector('#posts-count').innerText = `${posts.length}  ${postsStr} in the last year`;
+    document.querySelector('#posts-count').innerText = `${posts.length}  ${postsStr} ${i18n.in_the_last_year}`;
   } else {
-    document.querySelector('#posts-count').innerText = `${posts.length}  ${postsStr} in ${year}`;
+    document.querySelector('#posts-count').innerText = `${posts.length}  ${postsStr} ${i18n.in} ${year}`;
   }
 
   let html = ``;
@@ -231,18 +242,18 @@ function graph(year, posts, startDate, endDate) {
       continue;
     }
     html += `<text x="${15 * month + 16}" y="-9"
-    class="month">${months[(i + startDate.getMonth()) % 12]}</text>`;
+    class="month">${shortMonths[(i + startDate.getMonth()) % 12]}</text>`;
   }
   html += `
 <text text-anchor="start" class="wday" dx="-10" dy="8"
 style="display: none;">Sun</text>
-<text text-anchor="start" class="wday" dx="-10" dy="25">Mon</text>
+<text text-anchor="start" class="wday" dx="-10" dy="25">${days.Mon}</text>
 <text text-anchor="start" class="wday" dx="-10" dy="32"
 style="display: none;">Tue</text>
-<text text-anchor="start" class="wday" dx="-10" dy="56">Wed</text>
+<text text-anchor="start" class="wday" dx="-10" dy="56">${days.Wed}</text>
 <text text-anchor="start" class="wday" dx="-10" dy="57"
 style="display: none;">Thu</text>
-<text text-anchor="start" class="wday" dx="-10" dy="85">Fri</text>
+<text text-anchor="start" class="wday" dx="-10" dy="85">${days.Fri}</text>
 <text text-anchor="start" class="wday" dx="-10" dy="81"
 style="display: none;">Sat</text>
 `;
@@ -260,18 +271,18 @@ function svgTip(elem, count, dateStr) {
   }
   const rect = getCoords(elem);
   const date = new Date(dateStr);
-  const dateFmt = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  const dateFmt = `${shortMonths[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+
   if (count) {
-    svgElem.innerHTML = `<strong>${count} posts</strong> on ${dateFmt}`;
+    svgElem.innerHTML = `<strong>${count} ${count > 1 ? i18n.translation_posts : i18n.translation_post}</strong> ${i18n.on} ${dateFmt}`;
   } else {
-    svgElem.innerHTML = `<strong>No posts</strong> on ${dateFmt}`;
+    svgElem.innerHTML = `<strong>${i18n.no_posts}</strong> ${i18n.on} ${dateFmt}`;
   }
   svgElem.style.display = 'block';
   const tipRect = svgElem.getBoundingClientRect();
   svgElem.style.top = `${rect.top - 50}px`;
   svgElem.style.left = `${rect.left - tipRect.width / 2 + rect.width / 2}px`;
 }
-
 function hideTip() {
   svgElem.style.display = 'none';
 }
@@ -294,6 +305,7 @@ function getCoords(elem) {
   return { top, left, width: box.width, height: box.height };
 }
 
+
 function relativeTime(dateStr) {
   const now = new Date();
   const date = new Date(dateStr);
@@ -302,22 +314,24 @@ function relativeTime(dateStr) {
   const minutes = Math.floor(diff / 60);
   const hours = Math.floor(diff / 60 / 60);
   const days = Math.floor(diff / 60 / 60 / 24);
+
+  // Use translation keys for dynamic text
   if (seconds < 60) {
-    return `${seconds} seconds ago`;
+    return `${seconds} {{ i18n "seconds_ago" }}`;
   }
   if (minutes < 60) {
-    return `${minutes} minutes ago`;
+    return `${minutes} ${i18n.minutes_ago}`;
   }
   if (hours < 24) {
-    return `${hours} hours ago`;
+    return `${hours} ${i18n.hours_ago}`;
   }
   if (days < 30) {
-    return `${days} days ago`;
+    return `${days} ${i18n.days_ago}`;
   }
   if (date.getFullYear() === now.getFullYear()) {
-    return `${date.getDate()} ${months[date.getMonth()]}`;
+    return `${date.getDate()} ${shortMonths[date.getMonth()]}`;
   }
-  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  return `${date.getDate()} ${shortMonths[date.getMonth()]} ${date.getFullYear()}`;
 }
 
 function setRelativeTime() {

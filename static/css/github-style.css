@@ -33,7 +33,7 @@ body {
 }
 
 .octicon {
-  fill: currentColor;
+  fill: rgb(138, 138, 138);
 }
 
 .Header-search {
@@ -173,7 +173,7 @@ body {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 767px) {
   .Header {
     padding-left: 16px!important;
     padding-right: 16px!important;
@@ -182,7 +182,13 @@ body {
     display: none!important;
   }
   .Header-search {
-    max-width: 100%;
+    max-width: 100%!important;
+  }
+}
+
+@media (max-width: 324px) {
+  .test {
+    margin-top: 10px;
   }
 }
 
