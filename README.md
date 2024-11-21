@@ -275,6 +275,43 @@ cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh)
 
 Then you can verify the site is working and use `git push --all` to push the change to github. If you don't want to check again every time, you can uncomment the `#git push --all` in the script.
 
-## TODO
+##i18n support
 
-- 重写标题导航，那玩意儿引入的 JS 在控制台报错。
+1. Add add `es` and `en` folder in `content` folder to support Spanish and English.
+folder structure:
+```
+content
+├── en
+│   ├── post
+│   │   └── title_of_the_post.md
+│   └── readme.md
+└── es
+    ├── post
+    │   └── title_of_the_post.md
+    └── readme.md
+```
+2. add `languages` in `hugo.toml`:
+
+```toml
+[languages]
+  [languages.es]
+    contentDir = 'content/es'
+    disabled = false
+    languageCode = 'es-ES'
+    languageDirection = 'ltr'
+    languageName = 'Español'
+    title = 'Blog de prueba'
+    weight = 2
+    [languages.es.params]
+      subtitle = 'Referencia, tutoriales y explicaciones'
+  [languages.en]
+    contentDir = 'content/en'
+    disabled = false
+    languageCode = 'en-US'
+    languageDirection = 'ltr'
+    languageName = 'English'
+    title = 'Test Blog'
+    weight = 1
+    [languages.en.params]
+      subtitle = 'Reference, Tutorials, and Explanations'
+```
