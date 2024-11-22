@@ -170,9 +170,9 @@
     const currentPath = window.location.pathname;
     
     // Remove the current language prefix (e.g., /en/ or /es/)
-    const pathWithoutLang = currentPath.replace(/^\/(en|es)\//, '/');
+    const newPath = currentPath.replace(/\/(en|es)(\/|$)/, `/${selectedLang}`);
     
     // Redirect to the selected language
-    window.location.href = `/${selectedLang}${pathWithoutLang}`;
+    window.location.href = newPath;
   }
 </script>
